@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>demo water-basic</title>
+    <script th:src="@{result/js/echarts.common.min.js}"></script>
+    <script th:src="@{result/js/wordcloud.js}"></script>
+
+    <link th:rel="stylesheet" th:href="@{result/bootstrap/css/bootstrap.min.css}"
+          type="text/css"/>
+    <script type="text/javascript"
+            th:src="@{result/bootstrap/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{result/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{result/css/flip.css}"/>
+    <link rel="stylesheet" th:href="@{result/css/my.css}"/>
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#"><img style="margin-top: -17px;" th:src="@{result/img/brand.png}"/></a>
+    </div>
+
+    <form action="search" class="input-group col-md-3" style="margin-top: 10px;: " role="search">
+        <input type="text" class="form-control" name="keyword" placeholder="search"/>
+        <span class="input-group-btn">
+            <input type="submit" class="btn btn-info btn-search" value="搜一下"/>
+            </span>
+    </form>
+</nav>
+<div class="water-basic">
+    <div class="item" th:each="GoodsInfo : ${bigGoods}">
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <img th:src="${GoodsInfo.imgUrl}"/>
+                </div>
+                <div th:id="${#strings.append(GoodsInfo.goodsId,'b')}" class="back" style="width:200px;height:160px;">
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        var arrays = new Array();
+                        for (var i = 0; i < [[${GoodsInfo.wordFrequenciesList}]].length; i++) {
+                            arrays[i] = {
+                                value: [[${GoodsInfo.wordFrequenciesList}]][i].frequency,
+                                name: [[${GoodsInfo.wordFrequenciesList}]][i].word,
+                            }
+                        }
+                        var myChart = echarts
+                            .init(document
+                                .getElementById([[${#strings.append(GoodsInfo.goodsId,'b')}]]));
+                        option = {
+                            tooltip: {},
+                            series: [{
+                                type: 'wordCloud',
+                                center: [5, 2],
+                                gridSize: 12,
+                                sizeRange: [15, 30],
+                                rotationRange: [0, 0],
+                                shape: 'circle',
+                                textStyle: {
+                                    normal: {
+                                        color: function () {
+                                            return 'rgb('
+                                                + [
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160),
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160),
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160)]
+                                                    .join(',')
+                                                + ')';
+                                        }
+                                    },
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    }
+                                },
+                                data: arrays
+                            }]
+                        };
+                        myChart.setOption(option);
+                        /*]]>*/
+                    </script>
+                </div>
+
+            </div>
+        </div>
+        <div class="item-info">
+            <p class="item-name" th:text="${GoodsInfo.goodsName}"></p>
+            <div>
+						<span class="item-price"> <em>￥</em> <i th:text="${GoodsInfo.goodsPrice}"></i>
+						</span>
+                <div th:id="${GoodsInfo.goodsId}" style="width: 100%;height: 150px;">
+                </div>
+                <script th:inline="javascript">
+                    var myChart = echarts.init(document
+                        .getElementById([[${GoodsInfo.goodsId}]]));
+                    option = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        },
+                        color: ['#fdd922', '#ff7878', '#46aad7'],
+                        series: [{
+                            center: [104, 60],
+                            name: '评价比率',
+                            type: 'pie',
+                            radius: ['30%', '40%'],
+
+                            data: [{
+                                value: [[${GoodsInfo.midNum}]],
+                                name: '中性'
+                            }, {
+                                value: [[${GoodsInfo.negNum}]],
+                                name: '消极'
+                            }, {
+                                value: [[${GoodsInfo.posNum}]],
+                                name: '积极'
+                            },]
+                        }]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="water-basic">
+    <div class="item" th:each="GoodsInfo : ${bigGomeGoods}">
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <img th:src="${GoodsInfo.imgUrl}"/>
+                </div>
+                <div th:id="${#strings.append(GoodsInfo.goodsId,'b')}" class="back" style="width:200px;height:160px;">
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        var arrays = new Array();
+                        for (var i = 0; i < [[${GoodsInfo.wordFrequenciesList}]].length; i++) {
+                            arrays[i] = {
+                                value: [[${GoodsInfo.wordFrequenciesList}]][i].frequency,
+                                name: [[${GoodsInfo.wordFrequenciesList}]][i].word,
+                            }
+                        }
+                        var myChart = echarts
+                            .init(document
+                                .getElementById([[${#strings.append(GoodsInfo.goodsId,'b')}]]));
+                        option = {
+                            tooltip: {},
+                            series: [{
+                                type: 'wordCloud',
+                                center: [5, 2],
+                                gridSize: 12,
+                                sizeRange: [15, 30],
+                                rotationRange: [0, 0],
+                                shape: 'circle',
+                                textStyle: {
+                                    normal: {
+                                        color: function () {
+                                            return 'rgb('
+                                                + [
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160),
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160),
+                                                    Math
+                                                        .round(Math
+                                                            .random() * 160)]
+                                                    .join(',')
+                                                + ')';
+                                        }
+                                    },
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    }
+                                },
+                                data: arrays
+                            }]
+                        };
+                        myChart.setOption(option);
+                        /*]]>*/
+                    </script>
+                </div>
+
+            </div>
+        </div>
+        <div class="item-info">
+            <p class="item-name" th:text="${GoodsInfo.goodsName}"></p>
+            <div>
+						<span class="item-price"> <em>￥</em> <i th:text="${GoodsInfo.goodsPrice}"></i>
+						</span>
+                <div th:id="${GoodsInfo.goodsId}" style="width: 100%;height: 150px;">
+                </div>
+                <script th:inline="javascript">
+                    var myChart = echarts.init(document
+                        .getElementById([[${GoodsInfo.goodsId}]]));
+                    option = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        },
+                        color: ['#fdd922', '#ff7878', '#46aad7'],
+                        series: [{
+                            center: [104, 60],
+                            name: '评价比率',
+                            type: 'pie',
+                            radius: ['30%', '40%'],
+
+                            data: [{
+                                value: [[${GoodsInfo.midNum}]],
+                                name: '中性'
+                            }, {
+                                value: [[${GoodsInfo.negNum}]],
+                                name: '消极'
+                            }, {
+                                value: [[${GoodsInfo.posNum}]],
+                                name: '积极'
+                            },]
+                        }]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{result/js/waterfall.js}">
+</script>
+</body>
+</html>

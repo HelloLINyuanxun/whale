@@ -1,0 +1,38 @@
+img {
+    display: block;
+    width: 100%;
+}
+
+.item-info {
+    width: 200px;
+}
+
+.item-info p.item-name {
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #717171;
+    margin: 0.6em 0.6em;
+    line-height: 1.5em;
+}
+
+.item-info span.item-price {
+    margin-left: 0.5em;
+    float: left;
+    font-size: 20px;
+    font-weight: 400;
+    color: #6495ED;
+    font-family: Verdana;
+}
+
+.water-basic {
+    margin-top: 60px;
+    position: relative;
+}
+
+.item {
+    border: 1px solid #dedede;
+    position: absolute;
+    width: 200px;
+    margin: 5px;
+    transition: all 1s;
+}
